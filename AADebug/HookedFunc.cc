@@ -42,7 +42,7 @@ NTSTATUS NTAPI HookFunc::NewNtReadVirtualMemory(
 	return NewNtReadWriteVirtualMemory(&temp_message);
 }
 
-NTSTATUS NTAPI HookFunc::NewNtReadWriteVirtualMemory(Message_NtReadWriteVirtualMemory *temp_message)
+NTSTATUS NTAPI HookFunc::NewNtReadWriteVirtualMemory(Message_NtReadWriteVirtualMemory* temp_message)
 {
 	NTSTATUS status = 0;
 	IO_STATUS_BLOCK IoStatusBlock = { 0 };
@@ -55,7 +55,7 @@ NTSTATUS NTAPI HookFunc::NewNtReadWriteVirtualMemory(Message_NtReadWriteVirtualM
 
 NTSTATUS NTAPI HookFunc::NewNtProtectVirtualMemory(
 	_In_ HANDLE ProcessHandle,
-	_Inout_ PVOID *BaseAddress,
+	_Inout_ PVOID* BaseAddress,
 	_Inout_ PSIZE_T RegionSize,
 	_In_ ULONG NewProtect,
 	_Out_ PULONG OldProtect)
@@ -101,19 +101,19 @@ BOOL NTAPI HookFunc::NewDebugActiveProcess(DWORD dwProcessId)
 	NTSTATUS Status;
 
 	Status = NewDbgUiConnectToDbg();
-	if (!NT_SUCCESS(Status)) 
+	if (!NT_SUCCESS(Status))
 	{
 		return FALSE;
 	}
-	
+
 	Process = OpenProcess(PROCESS_ALL_ACCESS, FALSE, dwProcessId);
-	if (Process == NULL) 
+	if (Process == NULL)
 	{
 		return FALSE;
 	}
 
 	Status = NewDbgUiDebugActiveProcess(Process);
-	if (!NT_SUCCESS(Status)) 
+	if (!NT_SUCCESS(Status))
 	{
 		NtClose(Process);
 		return FALSE;
@@ -172,7 +172,7 @@ NTSTATUS NTAPI HookFunc::NewNtCreateDebugObject(
 		&temp_message, sizeof(Message_NewNtCreateDebugObject));
 #else
 	UNICODE_STRING64 temp_str = { 0 };//本就未初始化
-	
+
 
 	//Wow64ExtInit();
 	//ULONG64 addr64 = VirtualAllocEx64(GetCurrentProcess(), NULL, sizeof(OBJECT_ATTRIBUTES64), MEM_COMMIT, PAGE_EXECUTE_READWRITE);
@@ -186,7 +186,7 @@ NTSTATUS NTAPI HookFunc::NewNtCreateDebugObject(
 	temp_obj.ObjectName = (ULONG64)ObjectAttributes->ObjectName;
 	/*OBJECT_ATTRIBUTES64 *temp_obj = new OBJECT_ATTRIBUTES64();
 	temp_obj->Length = sizeof(OBJECT_ATTRIBUTES64);*/
-	
+
 
 	Message_NewNtCreateDebugObject64 temp_message = { 0 };
 	temp_message.DebugObjectHandle = (ULONG64)DebugObjectHandle;
@@ -213,11 +213,11 @@ NTSTATUS NTAPI HookFunc::NewNtCreateDebugObject(
 	}
 	ObjectAttributes->ObjectName->Length = temp_str.Length;
 	ObjectAttributes->ObjectName->MaximumLength = temp_str.MaximumLength;*/
-	
+
 
 #endif // _AMD64_
 
-	
+
 	return status;
 }
 
@@ -280,10 +280,10 @@ NTSTATUS NTAPI HookFunc::NewDbgUiDebugActiveProcess(IN HANDLE Process)
 {
 	NTSTATUS Status;
 	Status = NewNtDebugActiveProcess(Process, _DebugObjectHandle);
-	if (NT_SUCCESS(Status)) 
+	if (NT_SUCCESS(Status))
 	{
 		Status = DbgUiIssueRemoteBreakin(Process);
-		if (!NT_SUCCESS(Status)) 
+		if (!NT_SUCCESS(Status))
 		{
 			Status = NewNtRemoveProcessDebug(Process, _DebugObjectHandle);//Status = DbgUiStopDebugging(Process);
 		}
@@ -302,7 +302,7 @@ NTSTATUS NTAPI HookFunc::NewDbgUiContinue(
 	IN PCLIENT_ID AppClientId,
 	IN NTSTATUS ContinueStatus)
 {
-	 return NtDebugContinue(_DebugObjectHandle, AppClientId, ContinueStatus);
+	return NtDebugContinue(_DebugObjectHandle, AppClientId, ContinueStatus);
 }
 
 HANDLE NTAPI HookFunc::NewDbgUiGetThreadDebugObject()

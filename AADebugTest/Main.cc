@@ -61,7 +61,7 @@ int main()
 	//WriteProcessMemory(handle, (LPVOID)Addr, &p, 8, 0);
 	//ReadProcessMemory(handle, (LPCVOID)Addr, &p, 8, 0);
 	//std::cout << std::hex << p << std::endl;
-	
+
 	STARTUPINFOA startupinfo;
 	PROCESS_INFORMATION processinformation;
 	RtlZeroMemory(&startupinfo, sizeof(STARTUPINFO));
@@ -70,16 +70,16 @@ int main()
 	/*if (!CreateProcessA("C:\\Windows\\System32\\calc.exe", nullptr, nullptr, nullptr,
 		false, DEBUG_PROCESS, nullptr, nullptr, &startupinfo, &processinformation))*/
 
-	/*if (!CreateProcessA("F:\\Project\\AADebug\\x64\\Debug\\al-khaser.exe", nullptr, nullptr, nullptr,
-		false, DEBUG_ONLY_THIS_PROCESS|DEBUG_PROCESS, nullptr, nullptr, &startupinfo, &processinformation))*/
+		/*if (!CreateProcessA("F:\\Project\\AADebug\\x64\\Debug\\al-khaser.exe", nullptr, nullptr, nullptr,
+			false, DEBUG_ONLY_THIS_PROCESS|DEBUG_PROCESS, nullptr, nullptr, &startupinfo, &processinformation))*/
 
-		/*if (!CreateProcessA("F:\\Project\\AADebug\\x64\\Debug\\AADebugBeDebuger.exe", nullptr, nullptr, nullptr,
-			false, 0, nullptr, nullptr, &startupinfo, &processinformation))*/
+			/*if (!CreateProcessA("F:\\Project\\AADebug\\x64\\Debug\\AADebugBeDebuger.exe", nullptr, nullptr, nullptr,
+				false, 0, nullptr, nullptr, &startupinfo, &processinformation))*/
 
 	if (!CreateProcessA("C:\\Users\\Administrator\\Desktop\\al-khaser.exe", nullptr, nullptr, nullptr,
 		false, 0, nullptr, nullptr, &startupinfo, &processinformation))
 	{
-		std::cout << "error1:"<<GetLastError() << std::endl;
+		std::cout << "error1:" << GetLastError() << std::endl;
 		getchar();
 		return 0;
 	}
@@ -92,7 +92,7 @@ int main()
 	}
 
 	DEBUG_EVENT debugevent;
-	while (WaitForDebugEvent(&debugevent,INFINITE))
+	while (WaitForDebugEvent(&debugevent, INFINITE))
 	{
 		if (debugevent.u.Exception.ExceptionRecord.ExceptionCode == EXCEPTION_BREAKPOINT)
 		{
@@ -123,7 +123,7 @@ int main()
 			break;
 		}
 
-		bool tempb= ContinueDebugEvent(debugevent.dwProcessId,debugevent.dwThreadId,DBG_CONTINUE);
+		bool tempb = ContinueDebugEvent(debugevent.dwProcessId, debugevent.dwThreadId, DBG_CONTINUE);
 		if (tempb == false)
 		{
 		}
@@ -131,4 +131,5 @@ int main()
 
 	getchar();
 	return 0;
+
 }

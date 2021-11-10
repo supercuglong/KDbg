@@ -42,7 +42,7 @@
     <Configuration>Debug</Configuration>
     <Platform Condition="'$(Platform)' == ''">Win32</Platform>
     <RootNamespace>AADebugKernel</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -67,6 +67,7 @@
     <ConfigurationType>Driver</ConfigurationType>
     <DriverType>WDM</DriverType>
     <_NT_TARGET_VERSION>0x0601</_NT_TARGET_VERSION>
+    <Driver_SpectreMitigation>Spectre</Driver_SpectreMitigation>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <TargetVersion>Windows10</TargetVersion>
@@ -142,9 +143,15 @@
       <TreatWarningAsError>false</TreatWarningAsError>
       <PreprocessorDefinitions>_WIN64;_AMD64_;AMD64;_KERNEL_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeLibrary>
+      </RuntimeLibrary>
+      <FloatingPointExceptions>
+      </FloatingPointExceptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -155,56 +162,45 @@
       <EntryPointSymbol>GsDriverEntry</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>_WIN64;_AMD64_;AMD64;_KERNEL_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CRT\corecrt.cc" />
-    <ClCompile Include="CRT\c_alloc.cc" />
-    <ClCompile Include="CRT\new.cc" />
-    <ClCompile Include="CRT\stlcrt.cc" />
-    <ClCompile Include="IO_Control.cc" />
-    <ClCompile Include="Main.cc" />
-    <ClCompile Include="NewFunc.cc" />
-    <ClCompile Include="NtHookEngine\decoder.c" />
-    <ClCompile Include="NtHookEngine\distorm.c" />
-    <ClCompile Include="NtHookEngine\instructions.c" />
-    <ClCompile Include="NtHookEngine\insts.c" />
-    <ClCompile Include="NtHookEngine\mnemonics.c" />
-    <ClCompile Include="NtHookEngine\operands.c" />
-    <ClCompile Include="NtHookEngine\prefix.c" />
-    <ClCompile Include="NtHookEngine\textdefs.c" />
-    <ClCompile Include="NtHookEngine\wstring.c" />
-    <ClCompile Include="NtHookEngine\x64detour.c">
-      <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</InlineFunctionExpansion>
-    </ClCompile>
+    <ClCompile Include="hk.c" />
+    <ClCompile Include="IO_Control.c" />
+    <ClCompile Include="Main.c" />
+    <ClCompile Include="NewFunc.c" />
+    <ClCompile Include="vector.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CRT\corecrt.h" />
-    <ClInclude Include="CRT\c_alloc.h" />
-    <ClInclude Include="CRT\macro.h" />
-    <ClInclude Include="CRT\NativeEnums.h" />
-    <ClInclude Include="CRT\new.h" />
-    <ClInclude Include="CRT\Ntddk.hpp" />
-    <ClInclude Include="CRT\NtSysAPI_Func.hpp" />
-    <ClInclude Include="CRT\PEStructs.h" />
-    <ClInclude Include="CRT\stlcrt.h" />
     <ClInclude Include="Get_SSDT.h" />
+    <ClInclude Include="hk.h" />
     <ClInclude Include="IO_Control.h" />
+    <ClInclude Include="NativeEnums.h" />
     <ClInclude Include="NativeMessage.h" />
     <ClInclude Include="NewFunc.h" />
-    <ClInclude Include="NtHookEngine\config.h" />
-    <ClInclude Include="NtHookEngine\decoder.h" />
-    <ClInclude Include="NtHookEngine\distorm.h" />
-    <ClInclude Include="NtHookEngine\instructions.h" />
-    <ClInclude Include="NtHookEngine\insts.h" />
-    <ClInclude Include="NtHookEngine\mnemonics.h" />
-    <ClInclude Include="NtHookEngine\operands.h" />
-    <ClInclude Include="NtHookEngine\prefix.h" />
-    <ClInclude Include="NtHookEngine\textdefs.h" />
-    <ClInclude Include="NtHookEngine\wstring.h" />
-    <ClInclude Include="NtHookEngine\x64detour.h" />
-    <ClInclude Include="NtHookEngine\x86defs.h" />
+    <ClInclude Include="NtSysAPI_Func.h" />
+    <ClInclude Include="PEStructs.h" />
+    <ClInclude Include="vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

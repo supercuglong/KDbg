@@ -27,10 +27,10 @@ public:
 		_Out_bytecap_(BufferBytes) PVOID Buffer,
 		_In_ SIZE_T BufferBytes,
 		_Out_opt_ PSIZE_T ReturnBytes);
-	static NTSTATUS NTAPI NewNtReadWriteVirtualMemory(Message_NtReadWriteVirtualMemory *temp_message);
+	static NTSTATUS NTAPI NewNtReadWriteVirtualMemory(Message_NtReadWriteVirtualMemory* temp_message);
 	static NTSTATUS NTAPI NewNtProtectVirtualMemory(
 		_In_ HANDLE ProcessHandle,
-		_Inout_ PVOID *BaseAddress,
+		_Inout_ PVOID* BaseAddress,
 		_Inout_ PSIZE_T RegionSize,
 		_In_ ULONG NewProtect,
 		_Out_ PULONG OldProtect);

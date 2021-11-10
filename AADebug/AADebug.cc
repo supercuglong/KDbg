@@ -2,7 +2,7 @@
 #include "DetoursHook.h"
 #include "HookFunc.h"
 
-HookFunc *_HookFunc = nullptr;
+HookFunc* _HookFunc = nullptr;
 
 bool AADebug::Init()
 {
@@ -36,7 +36,7 @@ bool AADebug::StartHook()
 	{
 		return false;
 	}
-	
+
 	_Original_ReadVirtualMemory = DetoursHook("Ntdll.dll", "NtReadVirtualMemory", HookFunc::NewNtReadVirtualMemory);
 	if (!_Original_ReadVirtualMemory)
 	{

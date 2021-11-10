@@ -1,22 +1,8 @@
 #pragma once
-#include "Ntddk.hpp"
+#include <ntifs.h>
 #include "NativeEnums.h"
-#include "PEStructs.h"
 
-
-typedef unsigned long       DWORD;
-typedef int                 BOOL;
-typedef unsigned char       BYTE;
-typedef unsigned short      WORD;
-typedef float               FLOAT;
-typedef int                 INT;
-typedef unsigned int        UINT;
-typedef unsigned int        *PUINT;
-typedef PVOID* PPVOID;
-
-
-
-//Struct
+//Strut
 //-------------------------------------------
 typedef struct _SYSTEM_HANDLE_TABLE_ENTRY_INFO {
 	USHORT UniqueProcessId;
@@ -26,24 +12,24 @@ typedef struct _SYSTEM_HANDLE_TABLE_ENTRY_INFO {
 	USHORT HandleValue;
 	PVOID Object;
 	ULONG GrantedAccess;
-} SYSTEM_HANDLE_TABLE_ENTRY_INFO, *PSYSTEM_HANDLE_TABLE_ENTRY_INFO;
+} SYSTEM_HANDLE_TABLE_ENTRY_INFO, * PSYSTEM_HANDLE_TABLE_ENTRY_INFO;
 
 typedef struct _SYSTEM_HANDLE_INFORMATION {
 	ULONG NumberOfHandles;
 	SYSTEM_HANDLE_TABLE_ENTRY_INFO Handles[1];
-} SYSTEM_HANDLE_INFORMATION, *PSYSTEM_HANDLE_INFORMATION;
+} SYSTEM_HANDLE_INFORMATION, * PSYSTEM_HANDLE_INFORMATION;
 
 typedef struct _CURDIR {
 	UNICODE_STRING DosPath;
 	HANDLE Handle;
-} CURDIR, *PCURDIR;
+} CURDIR, * PCURDIR;
 
 typedef struct _RTL_DRIVE_LETTER_CURDIR {
 	USHORT Flags;
 	USHORT Length;
 	ULONG TimeStamp;
 	STRING DosPath;
-} RTL_DRIVE_LETTER_CURDIR, *PRTL_DRIVE_LETTER_CURDIR;
+} RTL_DRIVE_LETTER_CURDIR, * PRTL_DRIVE_LETTER_CURDIR;
 
 #define RTL_MAX_DRIVE_LETTERS 32
 typedef struct _RTL_USER_PROCESS_PARAMETERS {
@@ -80,7 +66,7 @@ typedef struct _RTL_USER_PROCESS_PARAMETERS {
 	UNICODE_STRING ShellInfo;       // ProcessParameters
 	UNICODE_STRING RuntimeData;     // ProcessParameters
 	RTL_DRIVE_LETTER_CURDIR CurrentDirectores[RTL_MAX_DRIVE_LETTERS];
-} RTL_USER_PROCESS_PARAMETERS, *PRTL_USER_PROCESS_PARAMETERS;
+} RTL_USER_PROCESS_PARAMETERS, * PRTL_USER_PROCESS_PARAMETERS;
 
 typedef struct _THREAD_BASIC_INFORMATION
 {
@@ -90,7 +76,7 @@ typedef struct _THREAD_BASIC_INFORMATION
 	ULONG_PTR AffinityMask;
 	LONG Priority;
 	LONG BasePriority;
-} THREAD_BASIC_INFORMATION, *PTHREAD_BASIC_INFORMATION;
+} THREAD_BASIC_INFORMATION, * PTHREAD_BASIC_INFORMATION;
 
 typedef struct _NT_PROC_THREAD_ATTRIBUTE_ENTRY
 {
@@ -98,13 +84,13 @@ typedef struct _NT_PROC_THREAD_ATTRIBUTE_ENTRY
 	SIZE_T Size;
 	ULONG_PTR Value;
 	ULONG Unknown;
-} NT_PROC_THREAD_ATTRIBUTE_ENTRY, *NT_PPROC_THREAD_ATTRIBUTE_ENTRY;
+} NT_PROC_THREAD_ATTRIBUTE_ENTRY, * NT_PPROC_THREAD_ATTRIBUTE_ENTRY;
 
 typedef struct _NT_PROC_THREAD_ATTRIBUTE_LIST
 {
 	ULONG Length;
 	NT_PROC_THREAD_ATTRIBUTE_ENTRY Entry[1];
-} NT_PROC_THREAD_ATTRIBUTE_LIST, *PNT_PROC_THREAD_ATTRIBUTE_LIST;
+} NT_PROC_THREAD_ATTRIBUTE_LIST, * PNT_PROC_THREAD_ATTRIBUTE_LIST;
 
 #ifdef _AMD64_
 typedef struct _PEB_LDR_DATA
@@ -115,7 +101,7 @@ typedef struct _PEB_LDR_DATA
 	LIST_ENTRY InLoadOrderModuleList;
 	LIST_ENTRY InMemoryOrderModuleList;
 	LIST_ENTRY InInitializationOrderModuleList;
-} PEB_LDR_DATA, *PPEB_LDR_DATA;
+} PEB_LDR_DATA, * PPEB_LDR_DATA;
 
 typedef struct _LDR_DATA_TABLE_ENTRY
 {
@@ -132,7 +118,7 @@ typedef struct _LDR_DATA_TABLE_ENTRY
 	USHORT TlsIndex;
 	LIST_ENTRY HashLinks;
 	ULONG TimeDateStamp;
-} LDR_DATA_TABLE_ENTRY, *PLDR_DATA_TABLE_ENTRY;
+} LDR_DATA_TABLE_ENTRY, * PLDR_DATA_TABLE_ENTRY;
 
 
 typedef struct _PEB
@@ -155,7 +141,7 @@ typedef struct _PEB
 	ULONG SystemReserved;
 	ULONG AtlThunkSListPtr32;
 	PVOID ApiSetMap;
-} PEB, *PPEB;
+} PEB, * PPEB;
 #else
 typedef struct _PEB_LDR_DATA
 {
@@ -165,7 +151,7 @@ typedef struct _PEB_LDR_DATA
 	LIST_ENTRY InLoadOrderModuleList;
 	LIST_ENTRY InMemoryOrderModuleList;
 	LIST_ENTRY InInitializationOrderModuleList;
-} PEB_LDR_DATA, *PPEB_LDR_DATA;
+} PEB_LDR_DATA, * PPEB_LDR_DATA;
 
 typedef struct _LDR_DATA_TABLE_ENTRY
 {
@@ -191,7 +177,7 @@ typedef struct _LDR_DATA_TABLE_ENTRY
 	PVOID            ContextInformation;
 	ULONG            OriginalBase;
 	LARGE_INTEGER    LoadTime;
-} LDR_DATA_TABLE_ENTRY, *PLDR_DATA_TABLE_ENTRY;
+} LDR_DATA_TABLE_ENTRY, * PLDR_DATA_TABLE_ENTRY;
 
 typedef struct _PEB {
 	BYTE                          Reserved1[2];
@@ -206,7 +192,7 @@ typedef struct _PEB {
 	BYTE                          Reserved6[128];
 	PVOID                         Reserved7[1];
 	ULONG                         SessionId;
-} PEB, *PPEB;
+} PEB, * PPEB;
 #endif // _AMD64_
 
 typedef struct _NON_PAGED_DEBUG_INFO
@@ -220,7 +206,7 @@ typedef struct _NON_PAGED_DEBUG_INFO
 	ULONG       CheckSum;
 	ULONG       SizeOfImage;
 	ULONGLONG   ImageBase;
-} NON_PAGED_DEBUG_INFO, *PNON_PAGED_DEBUG_INFO;
+} NON_PAGED_DEBUG_INFO, * PNON_PAGED_DEBUG_INFO;
 
 typedef struct _KLDR_DATA_TABLE_ENTRY
 {
@@ -243,7 +229,7 @@ typedef struct _KLDR_DATA_TABLE_ENTRY
 	// ULONG padding on IA64
 	PVOID LoadedImports;
 	PVOID PatchInformation;
-} KLDR_DATA_TABLE_ENTRY, *PKLDR_DATA_TABLE_ENTRY;
+} KLDR_DATA_TABLE_ENTRY, * PKLDR_DATA_TABLE_ENTRY;
 
 /// nt!_HARDWARE_PTE on x86 PAE-disabled Windows
 struct HardwarePteX86 {
@@ -301,10 +287,11 @@ struct HardwarePteX64 {
 	ULONG64 no_execute : 1;          //!< [63]
 };
 
+
 #if defined(_X86_)
-using HardwarePte = HardwarePteX86;
+#define HardwarePte HardwarePteX86
 #elif defined(_AMD64_)
-using HardwarePte = HardwarePteX64;
+#define HardwarePte HardwarePteX64
 #endif
 
 typedef struct _SYSTEM_BIGPOOL_ENTRY
@@ -318,11 +305,11 @@ typedef struct _SYSTEM_BIGPOOL_ENTRY
 		UCHAR Tag[4];
 		ULONG TagUlong;
 	};
-} SYSTEM_BIGPOOL_ENTRY, *PSYSTEM_BIGPOOL_ENTRY;
+} SYSTEM_BIGPOOL_ENTRY, * PSYSTEM_BIGPOOL_ENTRY;
 typedef struct _SYSTEM_BIGPOOL_INFORMATION {
 	ULONG Count;
 	SYSTEM_BIGPOOL_ENTRY AllocatedInfo[1];
-} SYSTEM_BIGPOOL_INFORMATION, *PSYSTEM_BIGPOOL_INFORMATION;
+} SYSTEM_BIGPOOL_INFORMATION, * PSYSTEM_BIGPOOL_INFORMATION;
 
 
 typedef struct _SYSTEM_SERVICE_TABLE {
@@ -334,7 +321,7 @@ typedef struct _SYSTEM_SERVICE_TABLE {
 	ULONG64	NumberOfServices;
 #endif
 	PVOID  		ParamTableBase;
-} SYSTEM_SERVICE_TABLE, *PSYSTEM_SERVICE_TABLE;
+} SYSTEM_SERVICE_TABLE, * PSYSTEM_SERVICE_TABLE;
 
 
 #ifdef _AMD64_
@@ -343,9 +330,9 @@ typedef struct _NOTIFY_INFO
 	ULONG	Count; // 0号索引存放个数
 	ULONG	CallbackType;
 	ULONG64	CallbacksAddr;
-	ULONG64	Cookie; // just work to cmpcallback
+	ULONG64	Cookie; // just work to callbacks
 	CHAR	ImgPath[260];
-}NOTIFY_INFO, *PNOTIFY_INFO;
+}NOTIFY_INFO, * PNOTIFY_INFO;
 
 typedef struct
 {
@@ -359,13 +346,13 @@ typedef struct
 	USHORT LoadCount;
 	USHORT PathLength;
 	char ImageName[MAXIMUM_FILENAME_LENGTH];
-}SYSTEM_MODULE, *PSYSTEM_MODULE;
+}SYSTEM_MODULE, * PSYSTEM_MODULE;
 
 typedef struct _SYSTEM_MODULE_INFORMATIONEX
 {
 	ULONG Count;//内核中以加载的模块的个数 
 	SYSTEM_MODULE Module[0];
-} SYSTEM_MODULE_INFORMATIONEX, *PSYSTEM_MODULE_INFORMATIONEX;
+} SYSTEM_MODULE_INFORMATIONEX, * PSYSTEM_MODULE_INFORMATIONEX;
 #endif
 
 #ifdef _AMD64_
@@ -381,15 +368,15 @@ typedef struct _RTL_PROCESS_MODULE_INFORMATION
 	USHORT LoadCount;
 	USHORT OffsetToFileName;
 	UCHAR  FullPathName[256];
-} RTL_PROCESS_MODULE_INFORMATION, *PRTL_PROCESS_MODULE_INFORMATION;
+} RTL_PROCESS_MODULE_INFORMATION, * PRTL_PROCESS_MODULE_INFORMATION;
 
 typedef struct _RTL_PROCESS_MODULES
 {
 	ULONG NumberOfModules;
 	RTL_PROCESS_MODULE_INFORMATION Modules[1];
-} RTL_PROCESS_MODULES, *PRTL_PROCESS_MODULES;
+} RTL_PROCESS_MODULES, * PRTL_PROCESS_MODULES;
 
-typedef struct _SYSTEM_MODULE_INFORMATION{
+typedef struct _SYSTEM_MODULE_INFORMATION {
 	HANDLE Section;
 	PVOID MappedBase;
 	PVOID Base;
@@ -400,7 +387,7 @@ typedef struct _SYSTEM_MODULE_INFORMATION{
 	USHORT LoadCount;
 	USHORT PathLength;
 	CHAR ImageName[256];
-} SYSTEM_MODULE_INFORMATION, *PSYSTEM_MODULE_INFORMATION;
+} SYSTEM_MODULE_INFORMATION, * PSYSTEM_MODULE_INFORMATION;
 #endif // _AMD64_
 
 typedef struct _PEB_LDR_DATA32
@@ -411,7 +398,7 @@ typedef struct _PEB_LDR_DATA32
 	LIST_ENTRY32 InLoadOrderModuleList;
 	LIST_ENTRY32 InMemoryOrderModuleList;
 	LIST_ENTRY32 InInitializationOrderModuleList;
-} PEB_LDR_DATA32, *PPEB_LDR_DATA32;
+} PEB_LDR_DATA32, * PPEB_LDR_DATA32;
 
 typedef struct _LDR_DATA_TABLE_ENTRY32
 {
@@ -428,7 +415,7 @@ typedef struct _LDR_DATA_TABLE_ENTRY32
 	USHORT TlsIndex;
 	LIST_ENTRY32 HashLinks;
 	ULONG TimeDateStamp;
-} LDR_DATA_TABLE_ENTRY32, *PLDR_DATA_TABLE_ENTRY32;
+} LDR_DATA_TABLE_ENTRY32, * PLDR_DATA_TABLE_ENTRY32;
 
 typedef struct _PEB32
 {
@@ -450,12 +437,12 @@ typedef struct _PEB32
 	ULONG SystemReserved;
 	ULONG AtlThunkSListPtr32;
 	ULONG ApiSetMap;
-} PEB32, *PPEB32;
+} PEB32, * PPEB32;
 
 typedef struct _WOW64_PROCESS
 {
 	PPEB32 Wow64;
-} WOW64_PROCESS, *PWOW64_PROCESS;
+} WOW64_PROCESS, * PWOW64_PROCESS;
 
 
 
@@ -465,7 +452,7 @@ typedef struct _AUX_ACCESS_DATA {
 	GENERIC_MAPPING GenericMapping;
 	ACCESS_MASK AccessesToAudit;
 	ACCESS_MASK MaximumAuditMask;
-} AUX_ACCESS_DATA, *PAUX_ACCESS_DATA;
+} AUX_ACCESS_DATA, * PAUX_ACCESS_DATA;
 
 typedef struct _OBJECT_TYPE_INITIALIZER {
 	USHORT Length;
@@ -488,7 +475,7 @@ typedef struct _OBJECT_TYPE_INITIALIZER {
 	OB_SECURITY_METHOD SecurityProcedure;
 	OB_QUERYNAME_METHOD QueryNameProcedure;
 	OB_OKAYTOCLOSE_METHOD OkayToCloseProcedure;*/
-} OBJECT_TYPE_INITIALIZER, *POBJECT_TYPE_INITIALIZER;
+} OBJECT_TYPE_INITIALIZER, * POBJECT_TYPE_INITIALIZER;
 
 typedef struct _OBJECT_TYPE { //XP
 	ERESOURCE Mutex;
@@ -501,11 +488,11 @@ typedef struct _OBJECT_TYPE { //XP
 	ULONG HighWaterNumberOfObjects;
 	ULONG HighWaterNumberOfHandles;
 	OBJECT_TYPE_INITIALIZER TypeInfo;
-//#ifdef POOL_TAGGING
-//	ULONG Key;
-//#endif //POOL_TAGGING
-//	ERESOURCE ObjectLocks[OBJECT_LOCK_COUNT];
-} OBJECT_TYPE, *POBJECT_TYPE;
+	//#ifdef POOL_TAGGING
+	//	ULONG Key;
+	//#endif //POOL_TAGGING
+	//	ERESOURCE ObjectLocks[OBJECT_LOCK_COUNT];
+} OBJECT_TYPE, * POBJECT_TYPE;
 #endif
 
 #if (NTDDI_VERSION == NTDDI_WIN7)
@@ -522,7 +509,7 @@ typedef struct _AUX_ACCESS_DATA
 	/* 0x0048 */ void* DeRefSecurityDescriptor /* function */;
 	/* 0x0050 */ void* SDLock;
 	/* 0x0058 */ struct _ACCESS_REASONS AccessReasons;
-} AUX_ACCESS_DATA, *PAUX_ACCESS_DATA; /* size: 0x00d8 */
+} AUX_ACCESS_DATA, * PAUX_ACCESS_DATA; /* size: 0x00d8 */
 
 typedef struct _OBJECT_TYPE_INITIALIZER //7601
 {
@@ -558,7 +545,7 @@ typedef struct _OBJECT_TYPE_INITIALIZER //7601
 	/* 0x0058 */ void* SecurityProcedure /* function */;
 	/* 0x0060 */ void* QueryNameProcedure /* function */;
 	/* 0x0068 */ void* OkayToCloseProcedure /* function */;
-} OBJECT_TYPE_INITIALIZER, *POBJECT_TYPE_INITIALIZER; /* size: 0x0070 */
+} OBJECT_TYPE_INITIALIZER, * POBJECT_TYPE_INITIALIZER; /* size: 0x0070 */
 
 typedef struct _OBJECT_TYPE//7601
 {
@@ -577,7 +564,7 @@ typedef struct _OBJECT_TYPE//7601
 	///* 0x00b8 */ unsigned long Key;
 	///* 0x00bc */ long Padding_4;
 	///* 0x00c0 */ struct _LIST_ENTRY CallbackList;
-} OBJECT_TYPE, *POBJECT_TYPE; /* size: 0x00d0 */
+} OBJECT_TYPE, * POBJECT_TYPE; /* size: 0x00d0 */
 
 typedef struct _DEBUG_OBJECT
 {
@@ -586,7 +573,7 @@ typedef struct _DEBUG_OBJECT
 	/* 0x0050 */ struct _LIST_ENTRY EventList;
 	/* 0x0060 */ unsigned long Flags;
 	/* 0x0064 */ long __PADDING__[1];
-} DEBUG_OBJECT, *PDEBUG_OBJECT; /* size: 0x0068 */
+} DEBUG_OBJECT, * PDEBUG_OBJECT; /* size: 0x0068 */
 
 typedef enum _DBGKM_APINUMBER
 {
@@ -599,7 +586,7 @@ typedef enum _DBGKM_APINUMBER
 	DbgKmUnloadDllApi = 6,
 	DbgKmErrorReportApi = 7,
 	DbgKmMaxApiNumber = 8,
-} DBGKM_APINUMBER, *PDBGKM_APINUMBER;
+} DBGKM_APINUMBER, * PDBGKM_APINUMBER;
 
 typedef struct _PORT_MESSAGE
 {
@@ -643,21 +630,21 @@ typedef struct _PORT_MESSAGE
 			/* 0x0024 */ long __PADDING__[1];
 		}; /* size: 0x0008 */
 	}; /* size: 0x0008 */
-} PORT_MESSAGE, *PPORT_MESSAGE; /* size: 0x0028 */
+} PORT_MESSAGE, * PPORT_MESSAGE; /* size: 0x0028 */
 
 typedef struct _DBGKM_EXCEPTION
 {
 	/* 0x0000 */ struct _EXCEPTION_RECORD ExceptionRecord;
 	/* 0x0098 */ unsigned long FirstChance;
 	/* 0x009c */ long __PADDING__[1];
-} DBGKM_EXCEPTION, *PDBGKM_EXCEPTION; /* size: 0x00a0 */
+} DBGKM_EXCEPTION, * PDBGKM_EXCEPTION; /* size: 0x00a0 */
 
 typedef struct _DBGKM_CREATE_THREAD
 {
 	/* 0x0000 */ unsigned long SubSystemKey;
 	/* 0x0004 */ long Padding_17;
 	/* 0x0008 */ void* StartAddress;
-} DBGKM_CREATE_THREAD, *PDBGKM_CREATE_THREAD; /* size: 0x0010 */
+} DBGKM_CREATE_THREAD, * PDBGKM_CREATE_THREAD; /* size: 0x0010 */
 
 typedef struct _DBGKM_CREATE_PROCESS
 {
@@ -668,17 +655,17 @@ typedef struct _DBGKM_CREATE_PROCESS
 	/* 0x0018 */ unsigned long DebugInfoFileOffset;
 	/* 0x001c */ unsigned long DebugInfoSize;
 	/* 0x0020 */ struct _DBGKM_CREATE_THREAD InitialThread;
-} DBGKM_CREATE_PROCESS, *PDBGKM_CREATE_PROCESS; /* size: 0x0030 */
+} DBGKM_CREATE_PROCESS, * PDBGKM_CREATE_PROCESS; /* size: 0x0030 */
 
 typedef struct _DBGKM_EXIT_THREAD
 {
 	/* 0x0000 */ long ExitStatus;
-} DBGKM_EXIT_THREAD, *PDBGKM_EXIT_THREAD; /* size: 0x0004 */
+} DBGKM_EXIT_THREAD, * PDBGKM_EXIT_THREAD; /* size: 0x0004 */
 
 typedef struct _DBGKM_EXIT_PROCESS
 {
 	/* 0x0000 */ long ExitStatus;
-} DBGKM_EXIT_PROCESS, *PDBGKM_EXIT_PROCESS; /* size: 0x0004 */
+} DBGKM_EXIT_PROCESS, * PDBGKM_EXIT_PROCESS; /* size: 0x0004 */
 
 typedef struct _DBGKM_LOAD_DLL
 {
@@ -687,18 +674,18 @@ typedef struct _DBGKM_LOAD_DLL
 	/* 0x0010 */ unsigned long DebugInfoFileOffset;
 	/* 0x0014 */ unsigned long DebugInfoSize;
 	/* 0x0018 */ void* NamePointer;
-} DBGKM_LOAD_DLL, *PDBGKM_LOAD_DLL; /* size: 0x0020 */
+} DBGKM_LOAD_DLL, * PDBGKM_LOAD_DLL; /* size: 0x0020 */
 
 typedef struct _DBGKM_UNLOAD_DLL
 {
 	/* 0x0000 */ void* BaseAddress;
-} DBGKM_UNLOAD_DLL, *PDBGKM_UNLOAD_DLL; /* size: 0x0008 */
+} DBGKM_UNLOAD_DLL, * PDBGKM_UNLOAD_DLL; /* size: 0x0008 */
 
 typedef struct _MI_EXTRA_IMAGE_INFORMATION
 {
 	/* 0x0000 */ unsigned long SizeOfHeaders;
 	/* 0x0004 */ unsigned long SizeOfImage;
-} MI_EXTRA_IMAGE_INFORMATION, *PMI_EXTRA_IMAGE_INFORMATION; /* size: 0x0008 */
+} MI_EXTRA_IMAGE_INFORMATION, * PMI_EXTRA_IMAGE_INFORMATION; /* size: 0x0008 */
 
 typedef struct _SECTION_IMAGE_INFORMATION
 {
@@ -737,13 +724,13 @@ typedef struct _SECTION_IMAGE_INFORMATION
 	/* 0x0034 */ unsigned long LoaderFlags;
 	/* 0x0038 */ unsigned long ImageFileSize;
 	/* 0x003c */ unsigned long CheckSum;
-} SECTION_IMAGE_INFORMATION, *PSECTION_IMAGE_INFORMATION; /* size: 0x0040 */
+} SECTION_IMAGE_INFORMATION, * PSECTION_IMAGE_INFORMATION; /* size: 0x0040 */
 
 typedef struct _MI_SECTION_IMAGE_INFORMATION
 {
 	/* 0x0000 */ struct _SECTION_IMAGE_INFORMATION ExportedImageInformation;
 	/* 0x0040 */ struct _MI_EXTRA_IMAGE_INFORMATION InternalImageInformation;
-} MI_SECTION_IMAGE_INFORMATION, *PMI_SECTION_IMAGE_INFORMATION; /* size: 0x0048 */
+} MI_SECTION_IMAGE_INFORMATION, * PMI_SECTION_IMAGE_INFORMATION; /* size: 0x0048 */
 
 typedef struct _DBGKM_ERROR_MSG
 {
@@ -761,7 +748,7 @@ typedef struct _DBGKM_ERROR_MSG
 		}; /* bitfield */
 	}; /* size: 0x0004 */
 	/* 0x00dc */ long __PADDING__[1];
-} DBGKM_ERROR_MSG, *PDBGKM_ERROR_MSG; /* size: 0x00e0 */
+} DBGKM_ERROR_MSG, * PDBGKM_ERROR_MSG; /* size: 0x00e0 */
 
 typedef struct _DBGKM_APIMSG
 {
@@ -782,7 +769,7 @@ typedef struct _DBGKM_APIMSG
 			/* 0x0030 */ struct _DBGKM_ERROR_MSG ErrorMsg;
 		}; /* size: 0x00e0 */
 	} /* size: 0x00e0 */ u;
-} DBGKM_APIMSG, *PDBGKM_APIMSG; /* size: 0x0110 */
+} DBGKM_APIMSG, * PDBGKM_APIMSG; /* size: 0x0110 */
 
 typedef struct _DEBUG_EVENT
 {
@@ -795,7 +782,7 @@ typedef struct _DEBUG_EVENT
 	/* 0x004c */ unsigned long Flags;
 	/* 0x0050 */ PETHREAD BackoutThread;
 	/* 0x0058 */ struct _DBGKM_APIMSG ApiMsg;
-} DEBUG_EVENT, *PDEBUG_EVENT; /* size: 0x0168 */
+} DEBUG_EVENT, * PDEBUG_EVENT; /* size: 0x0168 */
 #endif
 
 typedef struct _GDI_TEB_BATCH {
@@ -803,22 +790,22 @@ typedef struct _GDI_TEB_BATCH {
 	UCHAR	Alignment[4];
 	ULONG_PTR HDC;
 	ULONG	Buffer[GDI_BATCH_BUFFER_SIZE];
-} GDI_TEB_BATCH, *PGDI_TEB_BATCH;
+} GDI_TEB_BATCH, * PGDI_TEB_BATCH;
 
 typedef struct _TEB_ACTIVE_FRAME_CONTEXT
 {
 	ULONG Flags;
 	PSTR FrameName;
-} TEB_ACTIVE_FRAME_CONTEXT, *PTEB_ACTIVE_FRAME_CONTEXT;
-							  // 17/3/2011 updated
+} TEB_ACTIVE_FRAME_CONTEXT, * PTEB_ACTIVE_FRAME_CONTEXT;
+// 17/3/2011 updated
 typedef struct _TEB_ACTIVE_FRAME
 {
 	ULONG Flags;
-	struct _TEB_ACTIVE_FRAME *Previous;
+	struct _TEB_ACTIVE_FRAME* Previous;
 	PTEB_ACTIVE_FRAME_CONTEXT Context;
-} TEB_ACTIVE_FRAME, *PTEB_ACTIVE_FRAME;
+} TEB_ACTIVE_FRAME, * PTEB_ACTIVE_FRAME;
 
-							  // 18/04/2011
+// 18/04/2011
 typedef struct _TEB
 {
 	NT_TIB NtTib;
@@ -960,54 +947,54 @@ typedef struct _TEB
 	ULONG LockCount;
 	ULONG SpareUlong0;
 	PVOID ResourceRetValue;
-} TEB, *PTEB;
+} TEB, * PTEB;
 
 
 //-------------------------------------------
-extern "C" POBJECT_TYPE *IoDriverObjectType;
+POBJECT_TYPE* IoDriverObjectType;
 
 #define KeGetPreviousMode ExGetPreviousMode
 
 //Function
 //-------------------------------------------
-extern "C" NTKERNELAPI NTSTATUS NTAPI NtQueryInformationProcess(
-__in HANDLE ProcessHandle,
-__in PROCESSINFOCLASS ProcessInformationClass,
-__out_bcount(ProcessInformationLength) PVOID ProcessInformation,
-__in ULONG ProcessInformationLength,
-__out_opt PULONG ReturnLength
+NTKERNELAPI NTSTATUS NTAPI NtQueryInformationProcess(
+	__in HANDLE ProcessHandle,
+	__in PROCESSINFOCLASS ProcessInformationClass,
+	__out_bcount(ProcessInformationLength) PVOID ProcessInformation,
+	__in ULONG ProcessInformationLength,
+	__out_opt PULONG ReturnLength
 );
 
 #if defined(_X86_)
-extern "C" NTKERNELAPI NTSTATUS NTAPI NtQuerySystemInformation(
+NTKERNELAPI NTSTATUS NTAPI NtQuerySystemInformation(
 	_In_      SYSTEM_INFORMATION_CLASS SystemInformationClass,
 	_Inout_   PVOID                    SystemInformation,
 	_In_      ULONG                    SystemInformationLength,
 	_Out_opt_ PULONG                   ReturnLength
-	);
+);
 #elif defined(_AMD64_)
-extern "C" NTKERNELAPI NTSTATUS NTAPI NtQuerySystemInformation(
+NTKERNELAPI NTSTATUS NTAPI NtQuerySystemInformation(
 	_In_      SYSTEM_INFORMATION_CLASS SystemInformationClass,
 	_Inout_   PVOID                    SystemInformation,
 	_In_      ULONG                    SystemInformationLength,
 	_Out_opt_ PULONG                   ReturnLength
-	);
+);
 #endif
 
-extern "C" NTKERNELAPI UCHAR* NTAPI PsGetProcessImageFileName(
+NTKERNELAPI UCHAR* NTAPI PsGetProcessImageFileName(
 	__in PEPROCESS Process
-	);
+);
 
-extern "C" NTSYSAPI PVOID NTAPI RtlPcToFileHeader(
+NTSYSAPI PVOID NTAPI RtlPcToFileHeader(
 	PVOID PcValue,
-	PVOID *BaseOfImage
-	);
+	PVOID* BaseOfImage
+);
 
-extern "C" NTKERNELAPI PIMAGE_NT_HEADERS NTAPI RtlImageNtHeader(
+NTKERNELAPI PIMAGE_NT_HEADERS NTAPI RtlImageNtHeader(
 	PVOID Base
-	);
+);
 
-extern "C" NTKERNELAPI NTSTATUS NTAPI MmCopyVirtualMemory(
+NTKERNELAPI NTSTATUS NTAPI MmCopyVirtualMemory(
 	PEPROCESS SourceProcess,
 	PVOID SourceAddress,
 	PEPROCESS TargetProcess,
@@ -1015,9 +1002,9 @@ extern "C" NTKERNELAPI NTSTATUS NTAPI MmCopyVirtualMemory(
 	SIZE_T BufferSize,
 	KPROCESSOR_MODE PreviousMode,
 	PSIZE_T ReturnSize
-	);
+);
 
-extern "C" NTKERNELAPI NTSTATUS NTAPI ObReferenceObjectByName(
+NTKERNELAPI NTSTATUS NTAPI ObReferenceObjectByName(
 	__in PUNICODE_STRING ObjectName,
 	__in ULONG Attributes,
 	__in_opt PACCESS_STATE AccessState,
@@ -1026,9 +1013,9 @@ extern "C" NTKERNELAPI NTSTATUS NTAPI ObReferenceObjectByName(
 	__in KPROCESSOR_MODE AccessMode,
 	__inout_opt PVOID ParseContext,
 	__out PVOID* Object
-	);
+);
 
-extern "C" NTSYSAPI NTSTATUS NTAPI NtQueryInformationThread(
+NTSYSAPI NTSTATUS NTAPI NtQueryInformationThread(
 	IN HANDLE ThreadHandle,
 	IN THREADINFOCLASS ThreadInformationClass,
 	OUT PVOID ThreadInformation,
@@ -1036,31 +1023,31 @@ extern "C" NTSYSAPI NTSTATUS NTAPI NtQueryInformationThread(
 	OUT PULONG ReturnLength OPTIONAL
 );
 
-extern "C" NTKERNELAPI PVOID NTAPI PsGetProcessWow64Process(IN PEPROCESS Process);
+NTKERNELAPI PVOID NTAPI PsGetProcessWow64Process(IN PEPROCESS Process);
 
-extern "C" NTKERNELAPI PPEB NTAPI PsGetProcessPeb(IN PEPROCESS Process);
+NTKERNELAPI PPEB NTAPI PsGetProcessPeb(IN PEPROCESS Process);
 
-extern "C" NTSYSAPI PVOID NTAPI RtlImageDirectoryEntryToData(
+NTSYSAPI PVOID NTAPI RtlImageDirectoryEntryToData(
 	PVOID ImageBase,
 	BOOLEAN MappedAsImage,
 	USHORT DirectoryEntry,
 	PULONG Size
 );
 
-typedef VOID(NTAPI *PKNORMAL_ROUTINE)(
+typedef VOID(NTAPI* PKNORMAL_ROUTINE)(
 	PVOID NormalContext,
 	PVOID SystemArgument1,
 	PVOID SystemArgument2
 	);
 typedef VOID(NTAPI* PKKERNEL_ROUTINE)(
 	PRKAPC Apc,
-	PKNORMAL_ROUTINE *NormalRoutine,
-	PVOID *NormalContext,
-	PVOID *SystemArgument1,
-	PVOID *SystemArgument2
+	PKNORMAL_ROUTINE* NormalRoutine,
+	PVOID* NormalContext,
+	PVOID* SystemArgument1,
+	PVOID* SystemArgument2
 	);
-typedef VOID(NTAPI *PKRUNDOWN_ROUTINE)(PRKAPC Apc);
-extern "C" NTKERNELAPI VOID NTAPI KeInitializeApc(
+typedef VOID(NTAPI* PKRUNDOWN_ROUTINE)(PRKAPC Apc);
+NTKERNELAPI VOID NTAPI KeInitializeApc(
 	IN PKAPC Apc,
 	IN PKTHREAD Thread,
 	IN KAPC_ENVIRONMENT ApcStateIndex,
@@ -1071,31 +1058,31 @@ extern "C" NTKERNELAPI VOID NTAPI KeInitializeApc(
 	IN PVOID NormalContext
 );
 
-extern "C" NTKERNELAPI BOOLEAN NTAPI KeInsertQueueApc(
+NTKERNELAPI BOOLEAN NTAPI KeInsertQueueApc(
 	PKAPC Apc,
 	PVOID SystemArgument1,
 	PVOID SystemArgument2,
 	KPRIORITY Increment
 );
 
-extern "C" NTKERNELAPI PVOID NTAPI PsGetCurrentProcessWow64Process();
+NTKERNELAPI PVOID NTAPI PsGetCurrentProcessWow64Process();
 
-extern "C" NTKERNELAPI BOOLEAN NTAPI KeTestAlertThread(IN KPROCESSOR_MODE AlertMode);
+NTKERNELAPI BOOLEAN NTAPI KeTestAlertThread(IN KPROCESSOR_MODE AlertMode);
 
-extern "C" NTKERNELAPI PVOID NTAPI PsGetThreadTeb(IN PETHREAD Thread);
+NTKERNELAPI PVOID NTAPI PsGetThreadTeb(IN PETHREAD Thread);
 
-extern "C" NTKERNELAPI NTSTATUS NTAPI SeCreateAccessState(
+NTKERNELAPI NTSTATUS NTAPI SeCreateAccessState(
 	IN PACCESS_STATE AccessState,
 	IN PAUX_ACCESS_DATA AuxData,
 	IN ACCESS_MASK DesiredAccess,
 	IN PGENERIC_MAPPING GenericMapping OPTIONAL
 );
 
-extern "C" NTSYSAPI VOID NTAPI SeDeleteAccessState(
+NTSYSAPI VOID NTAPI SeDeleteAccessState(
 	PACCESS_STATE AccessState
 );
 
-extern "C" NTSYSAPI NTSTATUS NTAPI ObOpenObjectByName(
+NTSYSAPI NTSTATUS NTAPI ObOpenObjectByName(
 	__in POBJECT_ATTRIBUTES ObjectAttributes,
 	__in_opt POBJECT_TYPE ObjectType,
 	__in KPROCESSOR_MODE AccessMode,
@@ -1105,21 +1092,21 @@ extern "C" NTSYSAPI NTSTATUS NTAPI ObOpenObjectByName(
 	__out PHANDLE Handle
 );
 
-extern "C" NTSYSAPI NTSTATUS NTAPI PsLookupProcessThreadByCid(
+NTSYSAPI NTSTATUS NTAPI PsLookupProcessThreadByCid(
 	__in PCLIENT_ID Cid,
-	__deref_opt_out PEPROCESS *Process,
-	__deref_out PETHREAD *Thread
+	__deref_opt_out PEPROCESS* Process,
+	__deref_out PETHREAD* Thread
 );
 
-extern "C" NTSYSAPI PPEB NTAPI PsGetProcessPeb(
+NTSYSAPI PPEB NTAPI PsGetProcessPeb(
 	__in PEPROCESS Process
-	);
+);
 
-extern "C" NTSYSAPI PVOID NTAPI PsGetProcessDebugPort(
+NTSYSAPI PVOID NTAPI PsGetProcessDebugPort(
 	__in PEPROCESS Process
-	);
+);
 
-extern "C" NTSYSAPI NTSTATUS NTAPI ObCreateObject(
+NTSYSAPI NTSTATUS NTAPI ObCreateObject(
 	_In_ KPROCESSOR_MODE ProbeMode,
 	_In_ POBJECT_TYPE    ObjectType,
 	_In_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -1128,17 +1115,17 @@ extern "C" NTSYSAPI NTSTATUS NTAPI ObCreateObject(
 	_In_ ULONG           ObjectBodySize,
 	_In_ ULONG           PagedPoolCharge,
 	_In_ ULONG           NonPagedPoolCharge,
-	_Out_ PVOID *        Object
+	_Out_ PVOID* Object
 );
 
-extern "C" NTSYSAPI PVOID NTAPI PsGetProcessSectionBaseAddress(_In_ PEPROCESS Process);
+NTSYSAPI PVOID NTAPI PsGetProcessSectionBaseAddress(_In_ PEPROCESS Process);
 
-extern "C" NTSYSAPI NTSTATUS NTAPI ZwFlushInstructionCache(
+NTSYSAPI NTSTATUS NTAPI ZwFlushInstructionCache(
 	IN HANDLE ProcessHandle,
 	IN OPTIONAL PVOID BaseAddress,
 	IN SIZE_T Length);
 
-//extern "C" NTSYSAPI NTSTATUS NTAPI ObInsertObject(
+// NTSYSAPI NTSTATUS NTAPI ObInsertObject(
 //	_In_ PVOID              Object,
 //	_In_opt_ PACCESS_STATE  PassedAccessState,
 //	_In_opt_ ACCESS_MASK    DesiredAccess,
@@ -1146,24 +1133,24 @@ extern "C" NTSYSAPI NTSTATUS NTAPI ZwFlushInstructionCache(
 //	_Out_opt_ PVOID *       NewObject,
 //	_Out_opt_ PHANDLE       Handle
 //);
-//extern "C" NTSYSAPI VOID NTAPI ProbeForWriteHandle(PVOID);
-//extern "C" NTSYSAPI VOID NTAPI ProbeForReadSmallStructure(PVOID, ULONG, ULONG);
+// NTSYSAPI VOID NTAPI ProbeForWriteHandle(PVOID);
+// NTSYSAPI VOID NTAPI ProbeForReadSmallStructure(PVOID, ULONG, ULONG);
 //-------------------------------------------
 
-typedef NTSTATUS(NTAPI *_NtOpenProcessToken)(
-__in HANDLE ProcessHandle,
-__in ACCESS_MASK DesiredAccess,
-__out PHANDLE TokenHandle
-);
+typedef NTSTATUS(NTAPI* _NtOpenProcessToken)(
+	__in HANDLE ProcessHandle,
+	__in ACCESS_MASK DesiredAccess,
+	__out PHANDLE TokenHandle
+	);
 
-typedef NTSTATUS(NTAPI *_ZwQuerySystemInformation)(
+typedef NTSTATUS(NTAPI* _ZwQuerySystemInformation)(
 	_In_      SYSTEM_INFORMATION_CLASS SystemInformationClass,
 	_Inout_   PVOID                    SystemInformation,
 	_In_      ULONG                    SystemInformationLength,
 	_Out_opt_ PULONG                   ReturnLength
 	);
 
-typedef VOID(NTAPI *_MiProcessLoaderEntry)(
+typedef VOID(NTAPI* _MiProcessLoaderEntry)(
 	IN PVOID DataTableEntry,//PKLDR_DATA_TABLE_ENTRY
 	IN LOGICAL Insert
 	);
@@ -1178,7 +1165,7 @@ typedef NTSTATUS(*_NtReadVirtualMemory)(
 
 typedef NTSTATUS(*_NtProtectVirtualMemory)(
 	IN HANDLE ProcessHandle,
-	IN OUT PVOID *BaseAddress,
+	IN OUT PVOID* BaseAddress,
 	IN OUT PSIZE_T ProtectSize,
 	IN ULONG NewProtect,
 	OUT PULONG OldProtect);
@@ -1192,13 +1179,13 @@ typedef NTSTATUS(*_NtWriteVirtualMemory)(
 
 typedef NTSTATUS(*_NtAllocateVirtualMemory)(
 	IN HANDLE               ProcessHandle,
-	IN OUT PVOID            *BaseAddress,
+	IN OUT PVOID* BaseAddress,
 	IN ULONG                ZeroBits,
 	IN OUT PULONG           RegionSize,
 	IN ULONG                AllocationType,
 	IN ULONG                Protect);
 
-typedef NTSTATUS(NTAPI *_NtCreateThreadEx)(
+typedef NTSTATUS(NTAPI* _NtCreateThreadEx)(
 	OUT PHANDLE hThread,
 	IN ACCESS_MASK DesiredAccess,
 	IN PVOID ObjectAttributes,
@@ -1253,8 +1240,8 @@ typedef VOID(NTAPI* _KiDispatchException)(
 #else
 typedef VOID(NTAPI* _KiDispatchException)(
 	IN PEXCEPTION_RECORD ExceptionRecord,
-	IN void *ExceptionFrame,
-	IN void *TrapFrame,
+	IN void* ExceptionFrame,
+	IN void* TrapFrame,
 	IN KPROCESSOR_MODE PreviousMode,
 	IN BOOLEAN FirstChance);
 #endif // _AMD64_
@@ -1275,8 +1262,8 @@ typedef VOID(NTAPI* _DbgkCreateThread)(PETHREAD Thread, PVOID StartAddress);
 #ifdef _AMD64_
 typedef VOID(NTAPI* _DbgkMapViewOfSection)(
 	PEPROCESS Process,
-	void *SectionObject,
-	void *BaseAddress,
+	void* SectionObject,
+	void* BaseAddress,
 	unsigned int SectionOffset,
 	unsigned __int64 ViewSize);
 #else
@@ -1286,8 +1273,6 @@ typedef VOID(NTAPI* _DbgkMapViewOfSection)(
 	IN ULONG SectionOffset,
 	IN ULONG_PTR ViewSize);
 #endif // _AMD64_
-
-
 
 typedef VOID(NTAPI* _DbgkUnMapViewOfSection)(IN PVOID BaseAddress);
 
@@ -1309,15 +1294,15 @@ typedef NTSTATUS(NTAPI* _NtCreateUserProcess)(
 	PETHREAD ThreadHandle,
 	ACCESS_MASK ProcessDesiredAccess,
 	ACCESS_MASK ThreadDesiredAccess,
-	_OBJECT_ATTRIBUTES *ProcessObjectAttributes,
-	_OBJECT_ATTRIBUTES *ThreadObjectAttributes,
+	OBJECT_ATTRIBUTES* ProcessObjectAttributes,
+	OBJECT_ATTRIBUTES* ThreadObjectAttributes,
 	ULONG ProcessFlags,
 	ULONG ThreadFlags,
-	_RTL_USER_PROCESS_PARAMETERS *ProcessParameters,
-	void *CreateInfo,
-	void *AttributeList);
+	RTL_USER_PROCESS_PARAMETERS* ProcessParameters,
+	void* CreateInfo,
+	void* AttributeList);
 
-typedef NTSTATUS(NTAPI* _DbgkpSuppressDbgMsg)(_TEB *Teb);
+typedef NTSTATUS(NTAPI* _DbgkpSuppressDbgMsg)(TEB* Teb);
 
 typedef NTSTATUS(NTAPI* _NtCreateDebugObject)(
 	OUT PHANDLE DebugObjectHandle,
@@ -1325,8 +1310,6 @@ typedef NTSTATUS(NTAPI* _NtCreateDebugObject)(
 	IN POBJECT_ATTRIBUTES ObjectAttributes,
 	IN ULONG Flags);
 //-------------------------------------------
-
-
 
 //Offset
 //-------------------------------------------
@@ -1394,5 +1377,3 @@ typedef NTSTATUS(NTAPI* _NtCreateDebugObject)(
 #endif
 
 #define NtSysAPI_NtProtectVirtualMemory_X64_Win10_ALL 0x0050
-
-

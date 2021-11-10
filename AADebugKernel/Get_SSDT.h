@@ -1,6 +1,6 @@
 #pragma once
-#include "CRT/Ntddk.hpp"
-#include "CRT/NtSysAPI_Func.hpp"
+#include <ntifs.h>
+#include <intrin.h>
 
 #ifdef _AMD64_
 static PSYSTEM_SERVICE_TABLE GetKeServiceDescriptorTableAddrX64()
@@ -84,7 +84,7 @@ typedef struct _KSYSTEM_SERVICE_TABLE
 	ULONG   NumberOfService;     // 服务函数的个数, NumberOfService * 4 就是整个地址表的大小
 	ULONG   ParamTableBase;          // SSPT(System Service Parameter Table)的基地址
 
-} KSYSTEM_SERVICE_TABLE, *PKSYSTEM_SERVICE_TABLE;
+} KSYSTEM_SERVICE_TABLE, * PKSYSTEM_SERVICE_TABLE;
 
 typedef struct _KSERVICE_TABLE_DESCRIPTOR
 {
@@ -93,7 +93,7 @@ typedef struct _KSERVICE_TABLE_DESCRIPTOR
 	KSYSTEM_SERVICE_TABLE   notUsed1;
 	KSYSTEM_SERVICE_TABLE   notUsed2;
 
-} KSERVICE_TABLE_DESCRIPTOR, *PKSERVICE_TABLE_DESCRIPTOR;
+} KSERVICE_TABLE_DESCRIPTOR, * PKSERVICE_TABLE_DESCRIPTOR;
 
 extern "C" PKSERVICE_TABLE_DESCRIPTOR  KeServiceDescriptorTable;
 

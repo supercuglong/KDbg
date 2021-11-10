@@ -5,7 +5,7 @@
 
 int main()
 {
-	
+
 	std::cout << "process start" << std::endl;
 
 	__debugbreak();
