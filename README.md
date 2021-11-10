@@ -1,3 +1,6 @@
+## https://github.com/DragonQuestHero/Kernel-Anit-Anit-Debug-Plugins
+# 原项目在这，本人只是进行了重构，可以在VS2019下编译通过，并且剔除了C++，改用纯C。
+
 # AADebug
 
 内核反反调试插件
